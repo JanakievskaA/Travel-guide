@@ -1,12 +1,11 @@
-import os
 import time
 import streamlit as st
 from cohere.errors import TooManyRequestsError
 from langchain_cohere import ChatCohere
 from langchain.prompts import PromptTemplate
+from config import COHERE_API_KEY, COHERE_MODEL
 
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-llm = ChatCohere(model="command-r-plus-08-2024", cohere_api_key=COHERE_API_KEY)
+llm = ChatCohere(model=COHERE_MODEL, cohere_api_key=COHERE_API_KEY)
 
 prompt_template = PromptTemplate(
     input_variables=[

@@ -1,5 +1,6 @@
-# rag.py
-import os
+"""
+RAG (Retrieval-Augmented Generation) module for travel guide.
+"""
 import streamlit as st
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -10,12 +11,10 @@ from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from config import COHERE_API_KEY, COHERE_MODEL, COHERE_EMBEDDING_MODEL, RAG_DATA_FILE, RAG_DB_DIR
 
-
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-
-embeddings = CohereEmbeddings(cohere_api_key=COHERE_API_KEY, model="embed-english-v3.0")
-llm = ChatCohere(model="command-r-plus-08-2024", cohere_api_key=COHERE_API_KEY)
+embeddings = CohereEmbeddings(cohere_api_key=COHERE_API_KEY, model=COHERE_EMBEDDING_MODEL)
+llm = ChatCohere(model=COHERE_MODEL, cohere_api_key=COHERE_API_KEY)
 
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", (
@@ -35,20 +34,22 @@ prompt_template = ChatPromptTemplate.from_messages([
 @st.cache_resource
 def get_vector_store():
     try:
-        docs = TextLoader("rag.txt").load()
+        docs = TextLoader(str(RAG_DATA_FILE)).load()
     except FileNotFoundError:
-        return None, "rag.txt not found."
+        return None, f"RAG data file not found at {RAG_DATA_FILE}."
     except Exception as e:
         return None, str(e)
 
     chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
-    store = Chroma.from_documents(chunks, embeddings, persist_directory="rag_db")
+    store = Chroma.from_documents(chunks, embeddings, persist_directory=str(RAG_DB_DIR))
     return store, None
 
 history_store = StreamlitChatMessageHistory(key="rag_history")
 
 def initialize_rag():
     """
+    Initialize RAG chain for conversational travel guide.
+    
     Returns:
       chain: RunnableWithMessageHistory for conversational RAG
       retriever: VectorStore retriever
@@ -71,3 +72,4 @@ def initialize_rag():
         history_messages_key="chat_history"
     )
     return chain, retriever, None
+
