@@ -6,7 +6,7 @@ from langchain_cohere import ChatCohere
 from langchain.prompts import PromptTemplate
 
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-llm = ChatCohere(model="command-r", cohere_api_key=COHERE_API_KEY)
+llm = ChatCohere(model="command-r-plus-08-2024", cohere_api_key=COHERE_API_KEY)
 
 prompt_template = PromptTemplate(
     input_variables=[
@@ -63,18 +63,29 @@ def run_structured():
         "Preferred transport:", ["Public", "Walking", "Taxi", "Rental car", "Bicycle"]
     )
 
-    if st.button("Generate", key="gen_structured") and city and month and language:
-        params = {
-            "city": city,
-            "days": days,
-            "month": month,
-            "language": language,
-            "budget": budget,
-            "interests": ", ".join(interests),
-            "travel_pace": travel_pace,
-            "travel_companions": travel_companions,
-            "transport_preference": transport_preference
-        }
-        itinerary = get_trip_response_structured(params)
-        st.markdown(itinerary)
+    if st.button("Generate", key="gen_structured"):
+        if not city or not month or not language:
+            st.warning("Please fill in all required fields: City, Month, and Language.")
+        else:
+            if not COHERE_API_KEY:
+                st.error("COHERE_API_KEY environment variable is not set. Please set it before running the app.")
+            else:
+                try:
+                    params = {
+                        "city": city,
+                        "days": days,
+                        "month": month,
+                        "language": language,
+                        "budget": budget,
+                        "interests": ", ".join(interests),
+                        "travel_pace": travel_pace,
+                        "travel_companions": travel_companions,
+                        "transport_preference": transport_preference
+                    }
+                    with st.spinner("Generating your travel itinerary..."):
+                        itinerary = get_trip_response_structured(params)
+                    st.markdown(itinerary)
+                except Exception as e:
+                    st.error(f"Error generating itinerary: {str(e)}")
+                    st.exception(e)
 
