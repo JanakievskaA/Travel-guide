@@ -15,7 +15,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
 embeddings = CohereEmbeddings(cohere_api_key=COHERE_API_KEY, model="embed-english-v3.0")
-llm = ChatCohere(model="command-r", cohere_api_key=COHERE_API_KEY)
+llm = ChatCohere(model="command-r-plus-08-2024", cohere_api_key=COHERE_API_KEY)
 
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", (

@@ -7,7 +7,7 @@ from langchain.prompts import PromptTemplate
 from rag import initialize_rag
 
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-llm = ChatCohere(model="command-r", cohere_api_key=COHERE_API_KEY)
+llm = ChatCohere(model="command-r-plus-08-2024", cohere_api_key=COHERE_API_KEY)
 
 travel_prompt = PromptTemplate(
     input_variables=["raw_request"],
@@ -46,13 +46,24 @@ def run_free_form():
 
     raw_request = st.text_input("Describe your trip…", key="free_raw")
 
-    if st.button("Generate", key="gen_free") and raw_request.strip():
-        itinerary = get_trip_response_free(raw_request)
-        st.session_state.free_history.insert(0, {
-            "request": raw_request,
-            "response": itinerary,
-            "rag_details": None
-        })
+    if st.button("Generate", key="gen_free"):
+        if not raw_request.strip():
+            st.warning("Please enter your travel request.")
+        else:
+            if not COHERE_API_KEY:
+                st.error("COHERE_API_KEY environment variable is not set. Please set it before running the app.")
+            else:
+                try:
+                    with st.spinner("Generating your travel itinerary..."):
+                        itinerary = get_trip_response_free(raw_request)
+                    st.session_state.free_history.insert(0, {
+                        "request": raw_request,
+                        "response": itinerary,
+                        "rag_details": None
+                    })
+                except Exception as e:
+                    st.error(f"Error generating itinerary: {str(e)}")
+                    st.exception(e)
 
     for i, entry in enumerate(st.session_state.free_history):
         st.markdown(f"**You:** {entry['request']}")
