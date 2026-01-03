@@ -23,13 +23,16 @@ travel_prompt = PromptTemplate(
     )
 )
 
-@st.cache_data
-def get_trip_response_free(raw_text):
-    try:
-        return (travel_prompt | llm).invoke({"raw_request": raw_text}).content
-    except TooManyRequestsError:
-        time.sleep(6)
-        return (travel_prompt | llm).invoke({"raw_request": raw_text}).content
+def get_trip_response_free(raw_text, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return (travel_prompt | llm).invoke({"raw_request": raw_text}).content
+        except TooManyRequestsError:
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 10
+                time.sleep(wait_time)
+            else:
+                raise
 
 
 def run_free_form():
@@ -60,6 +63,9 @@ def run_free_form():
                         "response": itinerary,
                         "rag_details": None
                     })
+                except TooManyRequestsError:
+                    st.error("⚠️ Rate limit exceeded. Please wait a few minutes and try again. Cohere API has rate limits to prevent overuse.")
+                    st.info("💡 Tip: Try again in 1-2 minutes, or use the Guided Form mode which may have better caching.")
                 except Exception as e:
                     st.error(f"Error generating itinerary: {str(e)}")
                     st.exception(e)
@@ -76,12 +82,7 @@ def run_free_form():
                 )
                 st.session_state.free_history[i]["rag_details"] = response["answer"]
             except TooManyRequestsError:
-                time.sleep(6)
-                response = chain_with_history.invoke(
-                    {"input": f"Provide detailed information about the attractions: {entry['request']}"},
-                    config={"configurable": {"session_id": "free_session"}}
-                )
-                st.session_state.free_history[i]["rag_details"] = response["answer"]
+                st.error("⚠️ Rate limit exceeded. Please wait a few minutes before requesting more details.")
             except Exception as e:
                 st.error(f"Error fetching details: {e}")
 

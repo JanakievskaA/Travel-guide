@@ -2,7 +2,7 @@ Paris – Eiffel Tower:
 The iconic iron lattice tower on the Champ de Mars offers panoramic views of the city from its three levels. Admission: ~€25. Open daily 09:00–23:00.
 
 Paris – Louvre Museum:
-The world’s largest art museum, home to the Mona Lisa and thousands of masterpieces. Ticket: ~€17. Hours: 09:00–18:00 (Wednesdays & Fridays until 21:45).
+The world's largest art museum, home to the Mona Lisa and thousands of masterpieces. Ticket: ~€17. Hours: 09:00–18:00 (Wednesdays & Fridays until 21:45).
 
 Paris – Notre-Dame Cathedral:
 Gothic masterpiece on Île de la Cité, famous for its stained glass and flying buttresses. Free entry; tower climb ticket: ~€10. Open 07:45–18:45.
@@ -17,7 +17,7 @@ Rome – Colosseum:
 Ancient amphitheater where gladiators once battled, an enduring symbol of the Roman Empire. Entry: ~€16. Hours: 08:30–19:00.
 
 Rome – Vatican Museums & Sistine Chapel:
-Vast collection of art and frescoes culminating in Michelangelo’s Sistine Chapel ceiling. Ticket: ~€17. Hours: 09:00–18:00 (closed Sundays).
+Vast collection of art and frescoes culminating in Michelangelo's Sistine Chapel ceiling. Ticket: ~€17. Hours: 09:00–18:00 (closed Sundays).
 
 Rome – Pantheon:
 Well-preserved Roman temple with a striking domed oculus. Free entry. Open 09:00–19:00.
@@ -44,7 +44,7 @@ Tokyo – Ramen Alley (Tokyo Station):
 Narrow corridor of famous ramen shops inside the station offering regional bowls. Prices ~¥800–¥1,200. Open 11:00–23:00.
 
 New York – Statue of Liberty & Ellis Island:
-Symbolic copper statue and immigration museum telling America’s immigrant story. Ferry + crown access: ~$25. Ferries run 09:00–17:00.
+Symbolic copper statue and immigration museum telling America's immigrant story. Ferry + crown access: ~$25. Ferries run 09:00–17:00.
 
 New York – Central Park:
 Expansive urban oasis with walking paths, lakes, and cultural landmarks. Free entry; bike rental ~$15/hr. Open daily sunrise–1:00.
@@ -59,7 +59,7 @@ New York – Greenwich Village Food Crawl:
 Guided tasting tour of historic neighborhood sampling pizza, bagels, and dessert. Cost: ~$65 for six tastings.
 
 Barcelona – Sagrada Família:
-Antoni Gaudí’s unfinished basilica renowned for its ornate facades and towering spires. Ticket: ~€26. Hours: 09:00–18:00.
+Antoni Gaudí's unfinished basilica renowned for its ornate facades and towering spires. Ticket: ~€26. Hours: 09:00–18:00.
 
 Barcelona – Park Güell:
 Colorful mosaic park designed by Gaudí with panoramic city views. Entry: ~€10. Hours: 08:00–21:30.
@@ -68,7 +68,82 @@ Barcelona – La Rambla & Boqueria Market:
 Famous pedestrian boulevard and vibrant food market offering tapas and fresh produce. Market stalls: €2–€10 per item. Open 08:00–20:30.
 
 Barcelona – Picasso Museum:
-Extensive collection of Pablo Picasso’s early works in a series of medieval palaces. Ticket: ~€12. Hours: 10:00–19:00.
+Extensive collection of Pablo Picasso's early works in a series of medieval palaces. Ticket: ~€12. Hours: 10:00–19:00.
 
 Barcelona – Tapas Tour in El Born:
 Guided tour in trendy district sampling five tapas bars with wine pairings. Cost: ~€55. Duration: 2 hours.
+
+London – Big Ben & Houses of Parliament:
+Iconic clock tower and seat of British government along the River Thames. Free to view from outside; guided tours: ~£25. Best viewed from Westminster Bridge.
+
+London – British Museum:
+World-renowned museum housing artifacts from around the globe, including the Rosetta Stone and Elgin Marbles. Free entry; special exhibitions: ~£15. Hours: 10:00–17:30.
+
+London – Tower of London:
+Historic castle and former royal palace housing the Crown Jewels. Ticket: ~£33. Hours: 09:00–17:30. Beefeater tours included.
+
+London – Buckingham Palace:
+Official residence of the British monarch. Changing of the Guard: free, daily at 11:00. State Rooms tour: ~£30 (summer only).
+
+London – Borough Market:
+Historic food market offering artisanal produce, street food, and international cuisine. Prices: £5–£15 per meal. Open 10:00–17:00 (closed Sundays).
+
+Sydney – Sydney Opera House:
+Iconic performing arts venue with distinctive sail-like design. Guided tours: ~A$43. Best viewed from Circular Quay or Harbour Bridge.
+
+Sydney – Sydney Harbour Bridge:
+Steel arch bridge offering panoramic views of the harbor. BridgeClimb: ~A$268. Pylon Lookout: ~A$19. Pedestrian walkway: free.
+
+Sydney – Bondi Beach:
+Famous surf beach with golden sand and excellent waves. Free access. Beach walk to Coogee: 6km coastal path with stunning views.
+
+Sydney – Royal Botanic Gardens:
+Lush gardens overlooking Sydney Harbour with native and exotic plants. Free entry. Open 07:00–20:00. Guided tours available.
+
+Sydney – The Rocks Markets:
+Weekend markets in historic area featuring local crafts, food, and souvenirs. Prices: A$5–A$50. Open Saturdays 10:00–17:00, Sundays 09:00–17:00.
+
+Dubai – Burj Khalifa:
+World's tallest building with observation decks on 124th and 148th floors. At the Top: ~AED 149. At the Top Sky: ~AED 378. Hours: 08:30–23:00.
+
+Dubai – Dubai Mall:
+Massive shopping and entertainment complex with over 1,200 stores, aquarium, and ice rink. Free entry; activities: AED 50–AED 200. Open 10:00–24:00.
+
+Dubai – Palm Jumeirah:
+Artificial palm-shaped island with luxury resorts and beaches. Monorail: ~AED 25. Beach access: varies by resort. Best viewed from helicopter tour: ~AED 500.
+
+Dubai – Dubai Marina:
+Modern waterfront district with skyscrapers, restaurants, and boat tours. Dhow cruise: ~AED 50–AED 150. Dinner cruise: ~AED 200. Evening tours available.
+
+Dubai – Gold Souk:
+Traditional market in Deira selling gold, jewelry, and spices. Free entry; prices negotiable. Open 10:00–22:00 (closed Fridays 13:30–16:00).
+
+Amsterdam – Rijksmuseum:
+National museum showcasing Dutch art and history, including Rembrandt's "Night Watch". Ticket: ~€22.50. Hours: 09:00–17:00.
+
+Amsterdam – Anne Frank House:
+Museum in the hiding place where Anne Frank wrote her diary. Ticket: ~€16 (advance booking required). Hours: 09:00–22:00. Very popular, book weeks ahead.
+
+Amsterdam – Van Gogh Museum:
+Largest collection of Van Gogh's paintings and drawings. Ticket: ~€20. Hours: 09:00–18:00. Audio guide included.
+
+Amsterdam – Canal Cruise:
+Scenic boat tour through Amsterdam's historic canal ring. Ticket: ~€16–€25. Duration: 1–1.5 hours. Multiple departure points. Best in daylight.
+
+Amsterdam – Jordaan District:
+Charming neighborhood with narrow streets, art galleries, and cozy cafes. Free to explore. Best for walking and discovering local life.
+
+Singapore – Marina Bay Sands:
+Iconic hotel with rooftop infinity pool and SkyPark observation deck. SkyPark entry: ~S$26. Hours: 09:30–22:00. Spectacular views of the city.
+
+Singapore – Gardens by the Bay:
+Futuristic park with Supertree Grove and climate-controlled conservatories. Free entry to outdoor gardens. Cloud Forest & Flower Dome: ~S$28. Open 05:00–02:00.
+
+Singapore – Sentosa Island:
+Resort island with beaches, theme parks, and attractions. Free entry; attractions vary: S$10–S$80. Monorail: ~S$4. Best for families.
+
+Singapore – Singapore Zoo:
+World-class zoo with open enclosures and animal shows. Ticket: ~S$48. Hours: 08:30–18:00. Night Safari available separately: ~S$55.
+
+Singapore – Hawker Centers:
+Food courts offering diverse Asian cuisine at affordable prices. Popular: Maxwell Food Centre, Lau Pa Sat. Prices: S$3–S$15 per meal. Open various hours.

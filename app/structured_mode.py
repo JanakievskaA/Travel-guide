@@ -27,13 +27,16 @@ prompt_template = PromptTemplate(
     )
 )
 
-@st.cache_data
-def get_trip_response_structured(params):
-    try:
-        return (prompt_template | llm).invoke(params).content
-    except TooManyRequestsError:
-        time.sleep(6)
-        return (prompt_template | llm).invoke(params).content
+def get_trip_response_structured(params, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return (prompt_template | llm).invoke(params).content
+        except TooManyRequestsError:
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 10
+                time.sleep(wait_time)
+            else:
+                raise
 
 
 def run_structured():
@@ -84,6 +87,9 @@ def run_structured():
                     with st.spinner("Generating your travel itinerary..."):
                         itinerary = get_trip_response_structured(params)
                     st.markdown(itinerary)
+                except TooManyRequestsError:
+                    st.error("⚠️ Rate limit exceeded. Please wait a few minutes and try again. Cohere API has rate limits to prevent overuse.")
+                    st.info("💡 Tip: Try again in 1-2 minutes.")
                 except Exception as e:
                     st.error(f"Error generating itinerary: {str(e)}")
                     st.exception(e)

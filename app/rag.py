@@ -1,6 +1,3 @@
-"""
-RAG (Retrieval-Augmented Generation) module for travel guide.
-"""
 import streamlit as st
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -34,27 +31,43 @@ prompt_template = ChatPromptTemplate.from_messages([
 @st.cache_resource
 def get_vector_store():
     try:
-        docs = TextLoader(str(RAG_DATA_FILE)).load()
-    except FileNotFoundError:
-        return None, f"RAG data file not found at {RAG_DATA_FILE}."
-    except Exception as e:
-        return None, str(e)
+        import os
+        db_exists = os.path.exists(str(RAG_DB_DIR)) and os.path.exists(str(RAG_DB_DIR / "chroma.sqlite3"))
+        
+        if db_exists:
+            try:
+                store = Chroma(persist_directory=str(RAG_DB_DIR), embedding_function=embeddings)
+                _ = store.as_retriever()
+                return store, None
+            except Exception as e:
+                st.warning(f"Existing database may be corrupted. Recreating... Error: {str(e)}")
+        
+        try:
+            try:
+                docs = TextLoader(str(RAG_DATA_FILE), encoding='utf-8').load()
+            except Exception:
+                docs = TextLoader(str(RAG_DATA_FILE)).load()
+        except FileNotFoundError:
+            return None, f"RAG data file not found at {RAG_DATA_FILE}."
+        except Exception as e:
+            return None, f"Error loading RAG data file: {str(e)}. Path: {RAG_DATA_FILE}"
 
-    chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
-    store = Chroma.from_documents(chunks, embeddings, persist_directory=str(RAG_DB_DIR))
-    return store, None
+        chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
+        
+        try:
+            store = Chroma.from_documents(chunks, embeddings, persist_directory=str(RAG_DB_DIR))
+            return store, None
+        except Exception as e:
+            if "429" in str(e) or "TooManyRequests" in str(type(e).__name__):
+                return None, "Rate limit exceeded while creating embeddings. Please wait a few minutes and refresh the page. The database will be created automatically when the rate limit resets."
+            return None, f"Error creating vector store: {str(e)}"
+            
+    except Exception as e:
+        return None, f"Unexpected error: {str(e)}"
 
 history_store = StreamlitChatMessageHistory(key="rag_history")
 
 def initialize_rag():
-    """
-    Initialize RAG chain for conversational travel guide.
-    
-    Returns:
-      chain: RunnableWithMessageHistory for conversational RAG
-      retriever: VectorStore retriever
-      error: Error message if loading failed
-    """
     store, error = get_vector_store()
     if error:
         return None, None, error
