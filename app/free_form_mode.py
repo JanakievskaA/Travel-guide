@@ -1,10 +1,27 @@
 import time
+import re
 import streamlit as st
 from cohere.errors import TooManyRequestsError
 from langchain_cohere import ChatCohere
 from langchain.prompts import PromptTemplate
 from .rag import initialize_rag
-from config import COHERE_API_KEY, COHERE_MODEL
+from .map_utils import display_city_map, get_city_match
+from .weather_utils import display_weather_card
+from config import COHERE_API_KEY, COHERE_MODEL, SUPPORTED_CITIES
+
+MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+]
+
+
+def get_month_match(user_input: str) -> str | None:
+    """Find matching month from user input."""
+    user_input_lower = user_input.lower()
+    for month in MONTHS:
+        if month.lower() in user_input_lower:
+            return month
+    return None
 
 llm = ChatCohere(model=COHERE_MODEL, cohere_api_key=COHERE_API_KEY)
 
@@ -36,17 +53,30 @@ def get_trip_response_free(raw_text, max_retries=3):
 
 
 def run_free_form():
-    st.header("Free Text Mode")
+    st.markdown("<h2 style='text-align: center; color: #ffffff; font-size: 1.8rem; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);'>Free Text Mode</h2>", unsafe_allow_html=True)
+    
+    cities_list = ', '.join(SUPPORTED_CITIES[:-1]) + ' and ' + SUPPORTED_CITIES[-1]
+    st.info("📍 **You can enter ANY city** - AI will generate itinerary for all destinations!\n\n"
+            f"💡 **Cities with weather & map support:** {cities_list}")
 
     if "free_history" not in st.session_state:
         st.session_state.free_history = []
 
-    chain_with_history, retriever, error = initialize_rag()
-    if error:
-        st.error(error)
-        return
+    # Check if we have any supported cities in history that might need RAG
+    has_supported_cities = any(
+        get_city_match(entry.get("city")) is not None
+        for entry in st.session_state.free_history
+    )
 
-    raw_request = st.text_input("Describe your trip…", key="free_raw")
+    # Only initialize RAG if we have supported cities or if user just generated something
+    chain_with_history, retriever, error = None, None, None
+    if has_supported_cities:
+        chain_with_history, retriever, error = initialize_rag()
+        if error:
+            st.warning("RAG system temporarily unavailable, but you can still generate itineraries.")
+
+    raw_request = st.text_area("Describe your trip", key="free_raw", height=100, 
+                                placeholder="Example: I want to visit Paris for 5 days in June with a budget of $2000. I love art and good food.")
 
     if st.button("Generate", key="gen_free"):
         if not raw_request.strip():
@@ -58,10 +88,17 @@ def run_free_form():
                 try:
                     with st.spinner("Generating your travel itinerary..."):
                         itinerary = get_trip_response_free(raw_request)
+                    
+                    # Try to detect city and month from request
+                    detected_city = get_city_match(raw_request)
+                    detected_month = get_month_match(raw_request)
+                    
                     st.session_state.free_history.insert(0, {
                         "request": raw_request,
                         "response": itinerary,
-                        "rag_details": None
+                        "rag_details": None,
+                        "city": detected_city,
+                        "month": detected_month
                     })
                 except TooManyRequestsError:
                     st.error("⚠️ Rate limit exceeded. Please wait a few minutes and try again. Cohere API has rate limits to prevent overuse.")
@@ -73,18 +110,47 @@ def run_free_form():
     for i, entry in enumerate(st.session_state.free_history):
         st.markdown(f"**You:** {entry['request']}")
         st.markdown(f"**Itinerary:** {entry['response']}")
+        
+        # Only show weather and map for supported cities
+        if entry.get("city"):
+            # Check if city is supported
+            is_supported = get_city_match(entry["city"]) is not None
 
-        if st.button("Get More Details", key=f"rag_details_{i}"):
-            try:
-                response = chain_with_history.invoke(
-                    {"input": f"Provide detailed information about the attractions: {entry['request']}"},
-                    config={"configurable": {"session_id": "free_session"}}
-                )
-                st.session_state.free_history[i]["rag_details"] = response["answer"]
-            except TooManyRequestsError:
-                st.error("⚠️ Rate limit exceeded. Please wait a few minutes before requesting more details.")
-            except Exception as e:
-                st.error(f"Error fetching details: {e}")
+            if is_supported:
+                # Display weather if city and month were detected
+                if entry.get("month"):
+                    display_weather_card(entry["city"], entry["month"])
+
+                # Display map
+                display_city_map(entry["city"])
+
+                # Show Get More Details button for supported cities
+                if st.button("Get More Details", key=f"rag_details_{i}"):
+                    try:
+                        # Initialize RAG only when needed
+                        if chain_with_history is None:
+                            chain_with_history, retriever, error = initialize_rag()
+                            if error:
+                                st.error("Unable to load detailed information at this time.")
+                                return
+
+                        response = chain_with_history.invoke(
+                            {"input": f"Provide detailed information about the attractions: {entry['request']}"},
+                            config={"configurable": {"session_id": "free_session"}}
+                        )
+                        st.session_state.free_history[i]["rag_details"] = response["answer"]
+                    except TooManyRequestsError:
+                        st.error("⚠️ Rate limit exceeded. Please wait a few minutes before requesting more details.")
+                    except Exception as e:
+                        st.error(f"Error fetching details: {e}")
+            else:
+                # City not in supported list - show info message
+                cities_list = ', '.join(SUPPORTED_CITIES[:-1]) + ' and ' + SUPPORTED_CITIES[-1]
+                st.info(f"ℹ️ Weather forecast and interactive map are available for: {cities_list}")
+        else:
+            # No city detected - show general info
+            cities_list = ', '.join(SUPPORTED_CITIES[:-1]) + ' and ' + SUPPORTED_CITIES[-1]
+            st.info(f"ℹ️ Weather forecast and interactive map are available for: {cities_list}")
 
         if entry.get("rag_details"):
             st.markdown(f"**More Details:** {entry['rag_details']}")

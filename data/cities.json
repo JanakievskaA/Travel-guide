@@ -1,0 +1,362 @@
+{
+  "Paris": {
+    "center": [48.8566, 2.3522],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Eiffel Tower",
+        "coords": [48.8584, 2.2945],
+        "category": "landmark",
+        "icon": "tower"
+      },
+      {
+        "name": "Louvre Museum",
+        "coords": [48.8606, 2.3376],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Notre-Dame Cathedral",
+        "coords": [48.8530, 2.3499],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Montmartre & Sacré-Cœur",
+        "coords": [48.8867, 2.3431],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Le Marais",
+        "coords": [48.8598, 2.3623],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Rome": {
+    "center": [41.9028, 12.4964],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Colosseum",
+        "coords": [41.8902, 12.4922],
+        "category": "landmark",
+        "icon": "bank"
+      },
+      {
+        "name": "Vatican Museums & Sistine Chapel",
+        "coords": [41.9065, 12.4536],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Pantheon",
+        "coords": [41.8986, 12.4769],
+        "category": "landmark",
+        "icon": "bank"
+      },
+      {
+        "name": "Trevi Fountain",
+        "coords": [41.9009, 12.4833],
+        "category": "landmark",
+        "icon": "tint"
+      },
+      {
+        "name": "Trastevere",
+        "coords": [41.8869, 12.4660],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Barcelona": {
+    "center": [41.3851, 2.1734],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Sagrada Família",
+        "coords": [41.4036, 2.1744],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Park Güell",
+        "coords": [41.4145, 2.1527],
+        "category": "landmark",
+        "icon": "tree"
+      },
+      {
+        "name": "La Rambla & Boqueria Market",
+        "coords": [41.3816, 2.1716],
+        "category": "food",
+        "icon": "cutlery"
+      },
+      {
+        "name": "Picasso Museum",
+        "coords": [41.3851, 2.1808],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "El Born",
+        "coords": [41.3857, 2.1826],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Madrid": {
+    "center": [40.4168, -3.7038],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Prado Museum",
+        "coords": [40.4138, -3.6921],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Royal Palace",
+        "coords": [40.4180, -3.7143],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "Retiro Park",
+        "coords": [40.4153, -3.6845],
+        "category": "nature",
+        "icon": "tree"
+      },
+      {
+        "name": "Plaza Mayor",
+        "coords": [40.4155, -3.7074],
+        "category": "landmark",
+        "icon": "building"
+      },
+      {
+        "name": "Mercado de San Miguel",
+        "coords": [40.4154, -3.7089],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Amsterdam": {
+    "center": [52.3676, 4.9041],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Rijksmuseum",
+        "coords": [52.3600, 4.8852],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Anne Frank House",
+        "coords": [52.3752, 4.8840],
+        "category": "museum",
+        "icon": "home"
+      },
+      {
+        "name": "Van Gogh Museum",
+        "coords": [52.3584, 4.8811],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Canal Cruise",
+        "coords": [52.3738, 4.8910],
+        "category": "activity",
+        "icon": "ship"
+      },
+      {
+        "name": "Jordaan District",
+        "coords": [52.3747, 4.8786],
+        "category": "neighborhood",
+        "icon": "home"
+      }
+    ]
+  },
+  "Berlin": {
+    "center": [52.5200, 13.4050],
+    "zoom": 12,
+    "attractions": [
+      {
+        "name": "Brandenburg Gate",
+        "coords": [52.5163, 13.3777],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "Berlin Wall Memorial",
+        "coords": [52.5351, 13.3900],
+        "category": "landmark",
+        "icon": "monument"
+      },
+      {
+        "name": "Museum Island",
+        "coords": [52.5169, 13.4019],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Reichstag Building",
+        "coords": [52.5186, 13.3761],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "East Side Gallery",
+        "coords": [52.5052, 13.4396],
+        "category": "landmark",
+        "icon": "paint-brush"
+      }
+    ]
+  },
+  "Milan": {
+    "center": [45.4642, 9.1900],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Duomo di Milano",
+        "coords": [45.4641, 9.1919],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Galleria Vittorio Emanuele II",
+        "coords": [45.4657, 9.1897],
+        "category": "shopping",
+        "icon": "shopping-bag"
+      },
+      {
+        "name": "The Last Supper",
+        "coords": [45.4660, 9.1711],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Sforza Castle",
+        "coords": [45.4706, 9.1791],
+        "category": "landmark",
+        "icon": "bank"
+      },
+      {
+        "name": "Navigli District",
+        "coords": [45.4494, 9.1793],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Lisbon": {
+    "center": [38.7223, -9.1393],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Belém Tower",
+        "coords": [38.6916, -9.2160],
+        "category": "landmark",
+        "icon": "bank"
+      },
+      {
+        "name": "Jerónimos Monastery",
+        "coords": [38.6979, -9.2068],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Alfama District",
+        "coords": [38.7114, -9.1304],
+        "category": "neighborhood",
+        "icon": "home"
+      },
+      {
+        "name": "Tram 28",
+        "coords": [38.7139, -9.1334],
+        "category": "activity",
+        "icon": "subway"
+      },
+      {
+        "name": "Time Out Market",
+        "coords": [38.7067, -9.1459],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "London": {
+    "center": [51.5074, -0.1278],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Big Ben & Houses of Parliament",
+        "coords": [51.5007, -0.1246],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "British Museum",
+        "coords": [51.5194, -0.1270],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Tower of London",
+        "coords": [51.5081, -0.0759],
+        "category": "landmark",
+        "icon": "bank"
+      },
+      {
+        "name": "Buckingham Palace",
+        "coords": [51.5014, -0.1419],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "Borough Market",
+        "coords": [51.5055, -0.0910],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  },
+  "Vienna": {
+    "center": [48.2082, 16.3738],
+    "zoom": 13,
+    "attractions": [
+      {
+        "name": "Schönbrunn Palace",
+        "coords": [48.1845, 16.3122],
+        "category": "landmark",
+        "icon": "institution"
+      },
+      {
+        "name": "St. Stephen's Cathedral",
+        "coords": [48.2085, 16.3731],
+        "category": "landmark",
+        "icon": "church"
+      },
+      {
+        "name": "Belvedere Palace",
+        "coords": [48.1916, 16.3808],
+        "category": "museum",
+        "icon": "university"
+      },
+      {
+        "name": "Vienna State Opera",
+        "coords": [48.2029, 16.3689],
+        "category": "landmark",
+        "icon": "music"
+      },
+      {
+        "name": "Naschmarkt",
+        "coords": [48.1986, 16.3630],
+        "category": "food",
+        "icon": "cutlery"
+      }
+    ]
+  }
+}

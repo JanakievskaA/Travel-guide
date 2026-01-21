@@ -3,7 +3,14 @@ import streamlit as st
 from cohere.errors import TooManyRequestsError
 from langchain_cohere import ChatCohere
 from langchain.prompts import PromptTemplate
-from config import COHERE_API_KEY, COHERE_MODEL
+from config import COHERE_API_KEY, COHERE_MODEL, SUPPORTED_CITIES
+from .map_utils import display_city_map, get_city_match
+from .weather_utils import display_weather_card
+
+MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+]
 
 llm = ChatCohere(model=COHERE_MODEL, cohere_api_key=COHERE_API_KEY)
 
@@ -40,12 +47,24 @@ def get_trip_response_structured(params, max_retries=3):
 
 
 def run_structured():
-    st.header("Guided Form Mode")
+    st.markdown("<h2 style='text-align: center; color: #ffffff; font-size: 1.8rem; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);'>Guided Form Mode</h2>", unsafe_allow_html=True)
+    
+    # Show hint about enhanced cities
+    cities_list = ', '.join(SUPPORTED_CITIES[:-1]) + ' and ' + SUPPORTED_CITIES[-1]
+    st.info("📍 **You can enter ANY city** - AI will generate itinerary for all destinations!\n\n"
+            f"💡 **Cities with weather & map support:** {cities_list}")
+    
+    # Initialize session state for storing generated itinerary
+    if "structured_itinerary" not in st.session_state:
+        st.session_state.structured_itinerary = None
+        st.session_state.structured_city = None
+        st.session_state.structured_month = None
+        st.session_state.structured_is_supported = False
 
-    city = st.text_input("City:")
+    city = st.text_input("City:", placeholder="e.g., Paris, Rome, Berlin")
     days = st.number_input("Days:", min_value=1, step=1)
-    month = st.text_input("Month:")
-    language = st.text_input("Language:")
+    month = st.selectbox("Month:", options=[""] + MONTHS, index=0)
+    language = st.text_input("Language:", placeholder="e.g., English, French")
     budget_amount = st.number_input("Budget (USD):", min_value=0, step=50)
     budget = f"${budget_amount}"
 
@@ -86,11 +105,38 @@ def run_structured():
                     }
                     with st.spinner("Generating your travel itinerary..."):
                         itinerary = get_trip_response_structured(params)
-                    st.markdown(itinerary)
+                    st.session_state.structured_itinerary = itinerary
+                    st.session_state.structured_city = city
+                    st.session_state.structured_month = month
+                    # Check if city is one of the supported cities
+                    st.session_state.structured_is_supported = get_city_match(city) is not None
                 except TooManyRequestsError:
                     st.error("⚠️ Rate limit exceeded. Please wait a few minutes and try again. Cohere API has rate limits to prevent overuse.")
                     st.info("💡 Tip: Try again in 1-2 minutes.")
                 except Exception as e:
                     st.error(f"Error generating itinerary: {str(e)}")
                     st.exception(e)
+    
+    # Display stored itinerary, weather, and map
+    if st.session_state.structured_itinerary:
+        st.markdown("---")
+        st.subheader("📋 Your Itinerary")
+        st.markdown(st.session_state.structured_itinerary)
+        
+        # Only show weather and map for supported cities
+        if st.session_state.structured_is_supported:
+            matched_city = get_city_match(st.session_state.structured_city)
+            
+            # Display weather forecast
+            if matched_city and st.session_state.structured_month:
+                display_weather_card(matched_city, st.session_state.structured_month)
+            
+            # Display interactive map
+            if matched_city:
+                st.markdown("---")
+                display_city_map(matched_city)
+        else:
+            st.markdown("---")
+            st.info(f"ℹ️ **{st.session_state.structured_city}** is not in our enhanced database. "
+                   f"Weather forecast and interactive map are available for: {', '.join(SUPPORTED_CITIES)}")
 
