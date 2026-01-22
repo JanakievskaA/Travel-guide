@@ -6,6 +6,7 @@ from langchain.prompts import PromptTemplate
 from config import COHERE_API_KEY, COHERE_MODEL, SUPPORTED_CITIES
 from .map_utils import display_city_map, get_city_match
 from .weather_utils import display_weather_card
+from .rag import initialize_rag
 
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
@@ -60,6 +61,7 @@ def run_structured():
         st.session_state.structured_city = None
         st.session_state.structured_month = None
         st.session_state.structured_is_supported = False
+        st.session_state.structured_rag_details = None
 
     city = st.text_input("City:", placeholder="e.g., Paris, Rome, Berlin")
     days = st.number_input("Days:", min_value=1, step=1)
@@ -135,8 +137,38 @@ def run_structured():
             if matched_city:
                 st.markdown("---")
                 display_city_map(matched_city)
+
+                # Add Get More Details for supported cities
+                st.markdown("---")
+                if st.button("Get More Details", key="structured_details"):
+                        try:
+                            # Initialize RAG only when needed
+                            rag_chain, _, _ = initialize_rag()
+                            if rag_chain:
+                                # Create a query based on the structured inputs
+                                interests_list = [
+                                    "Culture and history", "Food and drinks", "Nature and adventure",
+                                    "Shopping", "Nightlife", "Art and museums", "Relaxation"
+                                ]
+                                selected_interests = interests_list[:3]  # Default first 3 or could be based on actual selections
+                                interests_text = ", ".join(selected_interests)
+
+                                query = f"Provide detailed information about attractions and local tips for {matched_city} for a {st.session_state.structured_month} trip focusing on {interests_text}"
+                                response = rag_chain.invoke({"input": query}, config={"configurable": {"session_id": "structured_session"}})
+                                st.session_state.structured_rag_details = response["answer"]
+                            else:
+                                st.error("RAG system unavailable at the moment.")
+                        except Exception as e:
+                            st.error(f"Error fetching details: {e}")
+
+                # Display RAG details if available
+                if hasattr(st.session_state, 'structured_rag_details') and st.session_state.structured_rag_details:
+                    st.markdown("### 📚 More Details")
+                    st.markdown(st.session_state.structured_rag_details)
+
         else:
             st.markdown("---")
+            cities_list = ', '.join(SUPPORTED_CITIES[:-1]) + ' and ' + SUPPORTED_CITIES[-1]
             st.info(f"ℹ️ **{st.session_state.structured_city}** is not in our enhanced database. "
-                   f"Weather forecast and interactive map are available for: {', '.join(SUPPORTED_CITIES)}")
+                   f"Weather forecast, interactive map and detailed information are available for: {cities_list}")
 
