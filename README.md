@@ -14,11 +14,8 @@ Smart Travel Guide is a modern, AI-driven trip planner designed to streamline th
 - **data/cities.json**: Structured data containing coordinates, attractions, and categories for all supported cities
 - **config.py**: Centralized configuration for API keys, models, data paths, and supported cities list
 
-## Supported Cities
 
-Paris, Rome, Barcelona, Madrid, Amsterdam, Berlin, Milan, Lisbon, London and Vienna
-
-## Enhanced Features (European Cities Only)
+## Enhanced Features
 
 Available in both Guided Form and Free Text modes:
 
