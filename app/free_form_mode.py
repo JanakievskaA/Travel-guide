@@ -135,7 +135,7 @@ def run_free_form():
                                 return
 
                         response = chain_with_history.invoke(
-                            {"input": f"Provide detailed information about the attractions: {entry['request']}"},
+                            {"input": f"Provide useful city information from the knowledge base for this request (no day-by-day itinerary): {entry['request']}"},
                             config={"configurable": {"session_id": "free_session"}}
                         )
                         st.session_state.free_history[i]["rag_details"] = response["answer"]
