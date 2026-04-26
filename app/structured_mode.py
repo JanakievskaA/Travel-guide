@@ -64,9 +64,9 @@ def run_structured():
         st.session_state.structured_rag_details = None
 
     city = st.text_input("City:", placeholder="e.g., Paris, Rome, Berlin")
-    days = st.number_input("Days:", min_value=1, step=1)
+    days = st.number_input("Days:", min_value=0, step=1, value=0)
     month = st.selectbox("Month:", options=[""] + MONTHS, index=0)
-    language = st.text_input("Language:", placeholder="e.g., English, French")
+    language = st.text_input("Language (optional):", placeholder="Defaults to English")
     budget_amount = st.number_input("Budget (USD):", min_value=0, step=50)
     budget = f"${budget_amount}"
 
@@ -87,8 +87,13 @@ def run_structured():
     )
 
     if st.button("Generate", key="gen_structured"):
-        if not city or not month or not language:
-            st.warning("Please fill in all required fields: City, Month, and Language.")
+        if (
+            not city.strip()
+            or not month
+            or days <= 0
+            or budget_amount <= 0
+        ):
+            st.warning("Please fill in all required fields: City, Month, Days and Budget.")
         else:
             if not COHERE_API_KEY:
                 st.error("COHERE_API_KEY environment variable is not set. Please set it before running the app.")
@@ -98,7 +103,7 @@ def run_structured():
                         "city": city,
                         "days": days,
                         "month": month,
-                        "language": language,
+                        "language": language.strip() or "English",
                         "budget": budget,
                         "interests": ", ".join(interests),
                         "travel_pace": travel_pace,
@@ -153,7 +158,11 @@ def run_structured():
                                 selected_interests = interests_list[:3]  # Default first 3 or could be based on actual selections
                                 interests_text = ", ".join(selected_interests)
 
-                                query = f"Provide detailed information about attractions and local tips for {matched_city} for a {st.session_state.structured_month} trip focusing on {interests_text}"
+                                query = (
+                                    f"Provide useful city information from the knowledge base for {matched_city} "
+                                    f"(month: {st.session_state.structured_month}, interests: {interests_text}). "
+                                    "Do not create a day-by-day itinerary."
+                                )
                                 response = rag_chain.invoke({"input": query}, config={"configurable": {"session_id": "structured_session"}})
                                 st.session_state.structured_rag_details = response["answer"]
                             else:

@@ -15,13 +15,14 @@ llm = ChatCohere(model=COHERE_MODEL, cohere_api_key=COHERE_API_KEY)
 
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", (
-        "You are a travel expert. Use the provided context to create a detailed day-by-day travel itinerary.\n"
-        "Include:\n"
-        "- Top attractions\n"
+        "You are a travel expert. Use the provided context to provide useful city information only.\n"
+        "Do NOT create a day-by-day itinerary and do NOT split the answer by days.\n"
+        "Respond with concise practical sections such as:\n"
+        "- Top attractions and why they are worth visiting\n"
         "- Local food recommendations with approximate costs\n"
-        "- Useful phrases in the local language\n"
-        "- Budget breakdown based on the user's budget\n"
-        "If details are missing, politely request clarification.\n"
+        "- Useful local phrases\n"
+        "- Best times to visit and practical tips (tickets, queues, opening hours)\n"
+        "Only include facts grounded in the provided context. If key details are missing, say so clearly.\n"
         "Context:\n{context}"
     )),
     MessagesPlaceholder(variable_name="chat_history"),
